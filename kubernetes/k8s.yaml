@@ -38,7 +38,7 @@ metadata:
   labels:
     app: wildwest
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: wildwest
       port: 8080
