@@ -1,3 +1,4 @@
+# Use an official Maven image as the builder
 FROM maven:3.6.2-jdk-11 as builder
 
 #OLD
@@ -27,12 +28,20 @@ ENV SPRING_BOOT_VERSION=2.6.14
 RUN mvn org.codehaus.mojo:versions-maven-plugin:2.7:set -DnewVersion=${SPRING_BOOT_VERSION} && \
     mvn -f /usr/src/app/pom.xml clean package
 
+# Use an official OpenJDK 11 image as the runtime image
 FROM adoptopenjdk/openjdk11:latest as runtime
 
+# Set a maintainer label
 LABEL maintainer="gshipley@gmail.com"
 
+# Expose the application port
 EXPOSE 8080
 
+# Create a directory in the runtime image
+RUN mkdir -p /usr/app
+
+# Copy the JAR file from the builder stage to the runtime image
 COPY --from=builder /usr/src/app/target/wildwest-1.0.jar /usr/app/wildwest.jar
 
+# Define the entry point for running the application
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/usr/app/wildwest.jar"]
