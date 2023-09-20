@@ -75,6 +75,6 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/usr/app/wi
 
 #TRIGGER UID 0 POLICY#
 # Run a command as root to trigger the ACS policy alert (during image build)
-USER root
-RUN whoami
+# USER root
+# RUN whoami
 #TRIGGER UID 0 POLICY#
