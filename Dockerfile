@@ -23,10 +23,15 @@ COPY pom.xml .
 # Manually specify the new Spring Boot version
 ENV SPRING_BOOT_VERSION=2.6.14
 
+#LESSNEW
+# Update the Spring Boot version in the pom.xml
+#RUN mvn org.codehaus.mojo:versions-maven-plugin:2.7:set -DnewVersion=${SPRING_BOOT_VERSION} && \
+#    mvn -f /usr/src/app/pom.xml clean package
+
 #NEW
 # Update the Spring Boot version in the pom.xml
-RUN mvn org.codehaus.mojo:versions-maven-plugin:2.7:set -DnewVersion=${SPRING_BOOT_VERSION} && \
-    mvn -f /usr/src/app/pom.xml clean package
+RUN sed -i "s/<version>.*<\/version>/<version>${SPRING_BOOT_VERSION}<\/version>/" pom.xml && \
+    mvn clean package
 
 # Use an official OpenJDK 11 image as the runtime image
 FROM adoptopenjdk/openjdk11:latest as runtime
