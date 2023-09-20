@@ -21,7 +21,7 @@ COPY pom.xml .
 
 #NEW
 # Manually specify the new Spring Boot version
-ARG SPRING_BOOT_VERSION=2.6.14
+ENV SPRING_BOOT_VERSION=2.6.14
 
 #LESSNEW
 # Update the Spring Boot version in the pom.xml
