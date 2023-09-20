@@ -42,8 +42,27 @@ FROM adoptopenjdk/openjdk11:latest as runtime
 # Set a maintainer label
 LABEL maintainer="gshipley@gmail.com"
 
+#STAGE TRIGGER UID 0 POLICY#
+# Add a user with a non-root UID (e.g., UID 1000)
+RUN adduser -D -u 1000 myuser
+
+# Switch to the non-root user
+USER myuser
+#STAGE TRIGGER UID 0 POLICY#
+
 # Expose the application port
 EXPOSE 8080
+
+#TRIGGER UID 0 POLICY#
+# Run a command as root to trigger the ACS policy alert (during image build)
+USER root
+RUN whoami
+#TRIGGER UID 0 POLICY#
+
+#CLEANUP TRIGGER UID 0 POLICY#
+# Switch back to the non-root user
+USER myuser
+#CLEANUP TRIGGER UID 0 POLICY#
 
 # Create a directory in the runtime image
 RUN mkdir -p /usr/app
