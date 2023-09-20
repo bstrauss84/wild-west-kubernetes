@@ -44,7 +44,7 @@ LABEL maintainer="gshipley@gmail.com"
 
 #STAGE TRIGGER UID 0 POLICY#
 # Add a user with a non-root UID (e.g., UID 1000)
-RUN adduser -D -u 1000 myuser
+RUN adduser -u 1000 --disabled-password myuser
 
 # Switch to the non-root user
 USER myuser
