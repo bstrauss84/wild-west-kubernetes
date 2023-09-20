@@ -1,11 +1,22 @@
 FROM maven:3.6.2-jdk-11 as builder
 
-COPY src /usr/src/app/src
+#OLD
+#COPY src /usr/src/app/src
 
-COPY pom.xml /usr/src/app
+#OLD
+#COPY pom.xml /usr/src/app
 
 #OLD
 #RUN mvn -f /usr/src/app/pom.xml clean package
+
+#NEW
+# Create a working directory
+WORKDIR /usr/src/app
+
+#NEW
+# Copy the application source code and pom.xml to the container
+COPY src ./src
+COPY pom.xml .
 
 #NEW
 # Manually specify the new Spring Boot version
