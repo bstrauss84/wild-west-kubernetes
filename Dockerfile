@@ -21,7 +21,7 @@ COPY pom.xml .
 
 #NEW
 # Manually specify the new Spring Boot version
-ARG SPRING_BOOT_VERSION=2.6.14
+#ARG SPRING_BOOT_VERSION=2.6.14
 
 #LESSNEW
 # Update the Spring Boot version in the pom.xml
@@ -30,8 +30,11 @@ ARG SPRING_BOOT_VERSION=2.6.14
 
 #NEW
 # Update the Spring Boot version in the pom.xml
-RUN sed -i "/<parent>/,/<\/parent>/ { /<version>/ s/<version>.*<\/version>/<version>${SPRING_BOOT_VERSION}<\/version>/ }" pom.xml && \
-    mvn clean package
+#RUN sed -i "/<parent>/,/<\/parent>/ { /<version>/ s/<version>.*<\/version>/<version>${SPRING_BOOT_VERSION}<\/version>/ }" pom.xml && \
+#    mvn clean package
+
+#NEWER
+RUN mvn -f pom.xml clean package -U
 
 # Use an official OpenJDK 11 image as the runtime image
 FROM adoptopenjdk/openjdk11:latest as runtime
