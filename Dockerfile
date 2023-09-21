@@ -78,3 +78,10 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/usr/app/wi
 # USER root
 # RUN whoami
 #TRIGGER UID 0 POLICY#
+
+#REMOVE TO TRIGGER UBUNTU PACKAGE MANAGER FOUND IN IMAGE POLICY
+# Remove package managers (apt and dpkg)
+RUN apt-get update && apt-get -y remove --purge apt dpkg && apt-get clean
+
+# Remove package manager cache to reduce image size
+RUN rm -rf /var/lib/apt/lists/*
