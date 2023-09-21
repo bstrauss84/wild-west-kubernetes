@@ -34,7 +34,8 @@ COPY pom.xml .
 #    mvn clean package
 
 #NEWER
-RUN mvn -f pom.xml clean package -U
+#RUN mvn -f pom.xml clean package -U
+RUN mvn -f pom.xml clean package
 
 # Use an official OpenJDK 11 image as the runtime image
 FROM adoptopenjdk/openjdk11:latest as runtime
